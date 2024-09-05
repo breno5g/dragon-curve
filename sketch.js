@@ -1,17 +1,27 @@
 let segments = [];
 let endPoint;
+let zoom = 1;
+let zoomSlider;
+let amountOfClicks = 0;
 
 function setup() {
   createCanvas(400, 400);
 
-  const a = createVector(200, 200);
-  const b = createVector(200, 190);
+  const a = createVector(0, 10);
+  const b = createVector(0, 0);
   endPoint = b;
 
   segments.push(new Segments(a, b));
+
+  zoomSlider = createSlider(0.1, 1, 1, 0.01);
+  zoomSlider.style("width", "100px");
+  zoomSlider.input(() => {
+    zoom = zoomSlider.value();
+  });
 }
 
 function mousePressed() {
+  if (amountOfClicks >= 15) return;
   let newSegments = [];
 
   for (let segment of segments) {
@@ -22,16 +32,21 @@ function mousePressed() {
   endPoint = newSegments[0].a;
 
   segments = segments.concat(newSegments);
+
+  amountOfClicks++;
 }
 
 function draw() {
   background(220);
 
+  translate(width / 2, height / 2);
+  scale(zoom);
+
   for (let segment of segments) {
     segment.show();
   }
 
-  stroke(255, 0, 0);
-  strokeWeight(4);
-  point(endPoint.x, endPoint.y);
+  // stroke(255, 0, 0);
+  // strokeWeight(4);
+  // point(endPoint.x, endPoint.y);
 }
