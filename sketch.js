@@ -1,18 +1,27 @@
 let segments = [];
+let endPoint;
 
 function setup() {
   createCanvas(400, 400);
 
-  const a = createVector(100, 250);
-  const b = createVector(100, 200);
+  const a = createVector(200, 200);
+  const b = createVector(200, 190);
+  endPoint = b;
 
   segments.push(new Segments(a, b));
 }
 
 function mousePressed() {
-  let segment = segments[0];
-  let newSegment = segment.rotate(segment.b);
-  segments.push(newSegment);
+  let newSegments = [];
+
+  for (let segment of segments) {
+    let newSegument = segment.rotate(endPoint);
+    newSegments.push(newSegument);
+  }
+
+  endPoint = newSegments[0].a;
+
+  segments = segments.concat(newSegments);
 }
 
 function draw() {
@@ -21,4 +30,8 @@ function draw() {
   for (let segment of segments) {
     segment.show();
   }
+
+  stroke(255, 0, 0);
+  strokeWeight(4);
+  point(endPoint.x, endPoint.y);
 }
