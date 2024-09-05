@@ -1,6 +1,5 @@
 let segments = [];
 let endPoint;
-let zoom = 1;
 let zoomSlider;
 let amountOfClicks = 0;
 
@@ -13,11 +12,8 @@ function setup() {
 
   segments.push(new Segments(a, b));
 
-  zoomSlider = createSlider(0.1, 1, 1, 0.01);
+  zoomSlider = createSlider(0.1, 3, 3, 0.01);
   zoomSlider.style("width", "100px");
-  zoomSlider.input(() => {
-    zoom = zoomSlider.value();
-  });
 }
 
 function mousePressed() {
@@ -40,7 +36,7 @@ function draw() {
   background(220);
 
   translate(width / 2, height / 2);
-  scale(zoom);
+  scale(zoomSlider.value());
 
   for (let segment of segments) {
     segment.show();
