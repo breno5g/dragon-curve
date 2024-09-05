@@ -16,7 +16,8 @@ function setup() {
   zoomSlider.style("width", "100px");
 }
 
-function mousePressed() {
+function mousePressed({ target }) {
+  if (target.id !== "defaultCanvas0") return;
   if (amountOfClicks >= 15) return;
   let newSegments = [];
 
